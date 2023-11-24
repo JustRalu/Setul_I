@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -34,7 +34,7 @@ namespace Setul_1
             ex_18();
             ex_19();
             ex_20();
-            ex_21(); 
+            ex_21();
             Console.ReadKey();
 
         }
@@ -48,8 +48,8 @@ namespace Setul_1
             Console.WriteLine("si aflati solutia ecuatiei de gradul I");
             Console.WriteLine();
             if (b == 0)
-           
-                Console.WriteLine("Solutia ecuatiei de gradul I este: 0");          
+
+                Console.WriteLine("Solutia ecuatiei de gradul I este: 0");
             else
             if (a == 0)
                 Console.WriteLine("Ecuatia data nu are solutii");
@@ -105,7 +105,7 @@ namespace Setul_1
                 {
 
                     double Parte_Reala = (-b / (2 * a));
-                    double Parte_Complexa = ((Math.Sqrt((delta * (-1))) / (2* a)));
+                    double Parte_Complexa = ((Math.Sqrt((delta * (-1))) / (2 * a)));
 
                     Console.WriteLine($"Solutiile ecuatiei de gradul al II-lea sunt: {Parte_Reala}+/-{Parte_Complexa}*i");
 
@@ -315,7 +315,7 @@ namespace Setul_1
                     if (n % i == 0)
                         ok = false;
 
-            if(ok)   
+            if (ok)
                 Console.Write($"{n} este prim");
             else
                 Console.Write($"{n} NU este prim");
@@ -357,27 +357,28 @@ namespace Setul_1
             }
             Console.WriteLine($"si aflati cate numere din [{a},{b}] sunt divizibile cu {n}");
             Console.WriteLine();
-            if (n < a || n > b || n == 0)
+            if (n == 0)
                 Console.WriteLine("date gresite date de la tastatura");
             else
             {
-                int ratie = n, aux_a = a;
-
+                int aux_a = a;
+                while(aux_a <= n && aux_a < b)
+                {
+                    if (n % aux_a == 0)
+                        nr++;
+                    aux_a++;
+                }
+                int ratie = n;
                 if (ratie < 0)
                     ratie *= (-1);
-
-                while ((aux_a % n != 0 || n % aux_a != 0) && aux_a < b)
+                while (aux_a % n != 0 && aux_a < b)
                     aux_a++;
 
-                if (aux_a == b && (b % n != 0 || n % b != 0))
-
-                    Console.WriteLine($"NU exista numere din [{a},{b}] care sa fie divizibile cu {n}");
-                else
-                {
+                if(aux_a % n == 0)
                     for (int i = aux_a; i <= b; i += ratie)
                         nr++;
-                    Console.WriteLine($"Numarul de numere din [{a},{b}] divizibile cu {n} este {nr}");
-                }
+                  Console.WriteLine($"Numarul de numere din [{a},{b}] divizibile cu {n} este {nr}");
+                
             }
 
             Console.WriteLine();
@@ -644,13 +645,13 @@ namespace Setul_1
         private static void ex_19()
         {
             Console.WriteLine("Dati de la tastatura un numar n");
-            int n = int.Parse(Console.ReadLine());
+            long n = long.Parse(Console.ReadLine());
             Console.WriteLine("si aflati daca acesta contine exact 2 cifre ce se repeta in scrierea sa");
             Console.WriteLine();
-            int[] cif = new int[10];
-            int n1 = n, n2 = n;
+            long[] cif = new long[10];
+           long n1 = n, n2 = n;
 
-            List<int> repetitii = new List<int>();
+            List<long> repetitii = new List<long>();
             for (int i = 0; i < 10; i++)
                 cif[i] = 0;
             int cifre_repetative = 0;
@@ -661,41 +662,31 @@ namespace Setul_1
             while (n != 0)
             {
 
-                if (cif[n % 10] > 1)///o anumita cifra se repeta
+                cif[n % 10]++;
+                n2 = n;
+                n /= 10;
+
+                if (cif[n2 % 10] > 1)///o anumita cifra se repeta
                 {
-                    if (!repetitii.Contains(n % 10))
+                    if (!repetitii.Contains(n2 % 10))
                     {
-                        repetitii.Add(n % 10);
+                        repetitii.Add(n2 % 10);
                         cifre_repetative++;///se repeta mai mult de o cifra din n
                         if (cifre_repetative > 2)
                         {
-                            Console.WriteLine($"In scrierea lui {n2} se repet MAI MULT de 2 cifre distincte");
+                            Console.WriteLine($"In scrierea lui {n1} se repet MAI MULT de 2 cifre distincte");
                             break;
                         }
                     }
                 }
 
-                cif[n % 10]++;
-                n1 = n;
-                n /= 10;
             }
-            if (cif[n1 % 10] > 1)///o anumita cifra se repeta
-            {
-                if (!repetitii.Contains(n1 % 10))
-                {
-                    repetitii.Add(n1 % 10);
-                    cifre_repetative++;///se repeta mai mult de o cifra din n
-                    if (cifre_repetative > 2)
-                    
-                        Console.WriteLine($"In scrierea lui {n2} se repet MAI MULT de 2 cifre distincte");
-                    
-                }
-            }
+
             if (cifre_repetative < 2)
-                Console.WriteLine($"In scrierea lui {n2} se repet MAI PUTIN de 2 cifre distincte");
+                Console.WriteLine($"In scrierea lui {n1} se repet MAI PUTIN de 2 cifre distincte");
             else
                 if (cifre_repetative == 2)
-                Console.WriteLine($"In scrierea lui {n2} se repet EXACT 2 cifre distincte");
+                Console.WriteLine($"In scrierea lui {n1} se repet EXACT 2 cifre distincte");
 
         }
         private static void ex_20()
@@ -755,34 +746,50 @@ namespace Setul_1
                 parteFract = rest;
             } while (rest != 0);
 
-            if (n1 == 1 || m1 % n1 == 0 || (f2 == 0 && f5 == 0))///fractie simpla/finita(primul si al doilea caz) sau fractie periodica simpla(al treilea caz)
+            if (n1 == 1 || m1 % n1 == 0)///fractie simpla/finita
             {
                 foreach (var item in cifre)
                 {
                     Console.Write(item);
                 }
             }
-             
-                else///fractie periodica mixta/// f2 != 0 si/sau f5 != 0
+            else
+            if(f2 == 0 && f5 == 0) ///fractie periodica simpla
+            {
+                for (int i = 0; i < resturi.Count; i++)
                 {
-                    for (int i = 0; i < resturi.Count; i++)
+                    if (resturi[i] == rest)
                     {
-                        if (resturi[i] == rest)
-                        {
-                            Console.Write("(");
-                        }
-                        Console.Write(cifre[i]);
+                        Console.Write("(");
                     }
-                    Console.WriteLine(")");
+                    Console.Write(cifre[i]);
                 }
-            
+                Console.WriteLine(")");
+            }
+            else///fractie periodica mixta f2 != 0 si/sau f5 != 0
+            {
+                foreach (var item in cifre)
+                {
+                    Console.Write(item);
+                }
+                for (int i = 0; i < resturi.Count; i++)
+                {
+                    if (resturi[i] == rest)
+                    {
+                        Console.Write("(");
+                    }
+                    Console.Write(cifre[i]);
+                }
+                Console.WriteLine(")");
+            }
+
 
         }
         private static void ex_21()
         {
             int random, random1;
             Random a = new Random();
-            random = a.Next(0,1024);
+            random = a.Next(0, 1024);
             Random b = new Random();
             do
             {
@@ -793,7 +800,7 @@ namespace Setul_1
 
             if (random > random1)
                 Console.WriteLine($"{random} > {random1}");
-            
+
             else
                 Console.WriteLine($"{random} < {random1}");
 
@@ -803,4 +810,3 @@ namespace Setul_1
     }
 }
 
-    
