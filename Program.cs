@@ -166,8 +166,8 @@ namespace Setul_1
         private static void ex_5()
         {
             Console.WriteLine("Scrieti doua numere n si k, k un numar ce este mai mic sau egal decat numarul de cifre ale lui n, date de la tastatura");
-            int n, k;
-            n = int.Parse(Console.ReadLine());
+            long n; int k;
+            n = long.Parse(Console.ReadLine());
             k = int.Parse(Console.ReadLine());
             Console.WriteLine($"si aflati a {k}-a cifra de la sfarsitul lui {n}");
             Console.WriteLine();
@@ -177,7 +177,7 @@ namespace Setul_1
 
             else
             {
-                int n1, cifre = 0;
+                long n1; int cifre = 0;
                 n1 = n;
                 while (n1 != 0)
                 {
@@ -243,8 +243,8 @@ namespace Setul_1
         {
             Console.WriteLine("Scrieti doua numere a si b");
             int a, b;
-            a = int.Parse(Console.ReadLine());
-            b = int.Parse(Console.ReadLine());
+            a = double.Parse(Console.ReadLine());
+            b = double.Parse(Console.ReadLine());
             Console.WriteLine("iar apoi inversati-le, dar fara a va folosi de variabile suplimentare");
             Console.WriteLine();
             if (a == 0)
@@ -253,7 +253,7 @@ namespace Setul_1
                 b = 0;
             }
             else
-                if (b == 0)
+            if (b == 0)
             {
                 b = a;
                 a = 0;
@@ -272,30 +272,34 @@ namespace Setul_1
         private static void ex_9()
         {
             Console.WriteLine("Dati un numar intreg n de la tastatura");
-            int n;
-            n = int.Parse(Console.ReadLine());
+            long n;
+            n = long.Parse(Console.ReadLine());
             Console.WriteLine("si aflati divizorii sai");
             Console.WriteLine();
-
-            if (n < 0)
-                n *= (-1);
-
-            if (n == 0 || n == 1)
-                Console.WriteLine($"divizorul lui {n} este el insusi, {n}");
+            if(n == 0)
+                Console.WriteLine("0 nu are divizori");
             else
-
+            {
+                if (n < 0)
+                n *= (-1);
+            
+            if (n == 1)
+                Console.WriteLine($"divizorul lui 1 este el insusi, 1");
+            else
+            {
                 if (n == 2)
                 Console.WriteLine($"divizorii lui 2 sunt 1 si 2");
             else
             {
                 Console.Write($"1, {n}, ");
-                for (int i = 2; i * i <= n; i++)
+                for (long i = 2; i * i <= n; i++)
                     if (n % i == 0)
                         Console.Write($"{i}, {n / i}, ");
             }
+            }
+            }
             Console.WriteLine();
-
-
+             
         }
         private static void ex_10()
         {
