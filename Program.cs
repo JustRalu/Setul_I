@@ -649,7 +649,7 @@ namespace Setul_1
             Console.WriteLine("si aflati daca acesta contine exact 2 cifre ce se repeta in scrierea sa");
             Console.WriteLine();
             long[] cif = new long[10];
-           long n1 = n;
+           long n1 = n, n2 = n;
 
             List<long> repetitii = new List<long>();
             for (int i = 0; i < 10; i++)
@@ -663,12 +663,14 @@ namespace Setul_1
             {
 
                 cif[n % 10]++;
-               
-                if (cif[n % 10] > 1)///o anumita cifra se repeta
+                n2 = n;
+                n /= 10;
+
+                if (cif[n2 % 10] > 1)///o anumita cifra se repeta
                 {
-                    if (!repetitii.Contains(n % 10))
+                    if (!repetitii.Contains(n2 % 10))
                     {
-                        repetitii.Add(n % 10);
+                        repetitii.Add(n2 % 10);
                         cifre_repetative++;///se repeta mai mult de o cifra din n
                         if (cifre_repetative > 2)
                         {
@@ -677,7 +679,7 @@ namespace Setul_1
                         }
                     }
                 }
-                n /= 10;
+
             }
 
             if (cifre_repetative < 2)
@@ -685,15 +687,18 @@ namespace Setul_1
             else
                 if (cifre_repetative == 2)
                 Console.WriteLine($"In scrierea lui {n1} se repet EXACT 2 cifre distincte");
-
+            Console.WriteLine();
         }
         private static void ex_20()
         {
+            Console.WriteLine("Scrieti 2 nr naturale:");
             int m, n, f2 = 0, f5 = 0, m1, n1;
             m = int.Parse(Console.ReadLine());
             n = int.Parse(Console.ReadLine());
             m1 = m;
             n1 = n;
+            Console.WriteLine();
+            Console.WriteLine($"Si realizati impartirea celor 2 nr: {m} si {m}");
             Console.WriteLine();
             Console.Write($"{m / n},"); ///parte intreaga
 
@@ -781,7 +786,7 @@ namespace Setul_1
                 Console.WriteLine(")");
             }
 
-
+            Console.WriteLine();
         }
         private static void ex_21()
         {
